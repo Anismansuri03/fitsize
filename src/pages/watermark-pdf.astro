@@ -1,0 +1,8 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import { WatermarkTool } from '../components/pdftools/StampTools';
+import { toolBySlug } from '../data/tools';
+---
+<ToolPage tool={toolBySlug('watermark-pdf')}>
+  <WatermarkTool client:load />
+</ToolPage>

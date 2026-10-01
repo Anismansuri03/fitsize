@@ -1,0 +1,8 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import { PageNumbersTool } from '../components/pdftools/StampTools';
+import { toolBySlug } from '../data/tools';
+---
+<ToolPage tool={toolBySlug('add-page-numbers')}>
+  <PageNumbersTool client:load />
+</ToolPage>

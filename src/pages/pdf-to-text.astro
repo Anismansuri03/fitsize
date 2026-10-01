@@ -1,0 +1,8 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import { PdfToTextTool } from '../components/pdftools/RepairAndTextTools';
+import { toolBySlug } from '../data/tools';
+---
+<ToolPage tool={toolBySlug('pdf-to-text')}>
+  <PdfToTextTool client:load />
+</ToolPage>

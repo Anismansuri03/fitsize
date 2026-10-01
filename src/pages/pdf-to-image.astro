@@ -1,0 +1,8 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import PdfToImageTool from '../components/PdfToImageTool';
+import { toolBySlug } from '../data/tools';
+---
+<ToolPage tool={toolBySlug('pdf-to-image')}>
+  <PdfToImageTool client:load />
+</ToolPage>

@@ -1,0 +1,8 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import PageTool from '../components/pdftools/PageTool';
+import { toolBySlug } from '../data/tools';
+---
+<ToolPage tool={toolBySlug('rotate-pdf')}>
+  <PageTool client:load mode="rotate" />
+</ToolPage>

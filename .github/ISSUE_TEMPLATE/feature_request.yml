@@ -1,0 +1,20 @@
+name: Feature or tool request
+description: Suggest a new tool, or an improvement to an existing one
+labels: [enhancement]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What would you like Fitsize to do?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What's the situation that made you want this?
+      description: Real examples help a lot more than "it would be nice to have".
+  - type: textarea
+    id: elsewhere
+    attributes:
+      label: Does another tool already do this?
+      description: If so, what does it get right or wrong about it?

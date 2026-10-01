@@ -1,0 +1,45 @@
+name: Bug report
+description: Something doesn't work the way it should
+labels: [bug]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what did you get instead?
+    validations:
+      required: true
+  - type: input
+    id: tool
+    attributes:
+      label: Which tool?
+      placeholder: e.g. Compress PDF, Edit PDF, Merge PDF
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open /compress-pdf/
+        2. Upload a 40-page scanned PDF
+        3. Set the limit to 200 KB
+        4. Click Compress
+    validations:
+      required: true
+  - type: textarea
+    id: file
+    attributes:
+      label: Can you share the file that triggers it?
+      description: >
+        Only if you're comfortable — your file never gets uploaded by Fitsize itself, but attaching
+        it here for debugging does share it with maintainers on GitHub. A file that reproduces the
+        bug (with anything private removed or replaced) helps enormously. If not, describe it: page
+        count, roughly how it was made, any unusual content.
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and device
+      placeholder: e.g. Chrome 128 on Android 14, Safari on iPhone 15
+    validations:
+      required: true

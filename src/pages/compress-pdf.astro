@@ -1,0 +1,8 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import CompressPdfTool from '../components/CompressPdfTool';
+import { toolBySlug } from '../data/tools';
+---
+<ToolPage tool={toolBySlug('compress-pdf')}>
+  <CompressPdfTool client:load />
+</ToolPage>

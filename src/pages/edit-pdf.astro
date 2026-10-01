@@ -1,0 +1,8 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import PdfEditor from '../components/editor/PdfEditor';
+import { toolBySlug } from '../data/tools';
+---
+<ToolPage tool={toolBySlug('edit-pdf')} wide>
+  <PdfEditor client:load />
+</ToolPage>

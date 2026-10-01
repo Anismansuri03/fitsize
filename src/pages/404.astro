@@ -1,0 +1,14 @@
+---
+import Base from '../layouts/Base.astro';
+import { tools } from '../data/tools';
+---
+<Base title="Page not found" description="This page doesn’t exist.">
+  <meta slot="head" name="robots" content="noindex" />
+  <div class="container page-head">
+    <h1>We can’t find that page</h1>
+    <p>Try one of the tools instead.</p>
+    <div class="related" style="margin-top:1.5rem">
+      {tools.map((t) => <a href={`/${t.slug}/`}>{t.name}</a>)}
+    </div>
+  </div>
+</Base>

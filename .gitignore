@@ -1,0 +1,14 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+.env
+.DS_Store
+# copied from node_modules by scripts/copy-assets.mjs on every build
+public/engine/gs.js
+public/engine/gs.wasm
+public/engine/qpdf.js
+public/engine/qpdf.wasm
+public/fonts/
+public/engine/LICENSE-ghostscript.txt
+public/pdfjs/

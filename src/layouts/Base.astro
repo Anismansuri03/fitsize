@@ -1,0 +1,131 @@
+---
+import '@fontsource-variable/bricolage-grotesque';
+import '@fontsource-variable/figtree';
+import '../styles/global.css';
+import { SITE } from '../site';
+import { CATEGORIES, tools } from '../data/tools';
+import Icon from '../components/Icon.astro';
+import ToolMenu from '../components/ToolMenu';
+
+interface Props {
+  title: string;
+  description: string;
+}
+const { title, description } = Astro.props;
+const path = Astro.url.pathname;
+const canonical = new URL(path, Astro.site).href;
+const fullTitle = title.includes(SITE.name) ? title : `${title} | ${SITE.name}`;
+const isCurrent = (slug: string) => path === `/${slug}/` || path.startsWith(`/${slug}-to-`);
+const quickLinks = tools.filter((t) => t.lead);
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="format-detection" content="telephone=no" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Fitsize" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL('/og-image.png', Astro.site).href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={new URL('/og-image.png', Astro.site).href} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href="/" aria-label={`${SITE.name} home`}>
+          <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true">
+            <rect width="32" height="32" rx="8" fill="#2340D9" />
+            <rect x="5" y="12.5" width="22" height="7" rx="3.5" fill="#fff" fill-opacity=".28" />
+            <rect x="5" y="12.5" width="14" height="7" rx="3.5" fill="#fff" />
+            <rect x="21.2" y="8.5" width="2.4" height="15" rx="1.2" fill="#fff" />
+          </svg>
+          {SITE.name}
+        </a>
+
+        <nav class="nav" aria-label="Tools">
+          {quickLinks.slice(0, 3).map((t) => (
+            <a class="navlink" href={`/${t.slug}/`} aria-current={isCurrent(t.slug) ? 'page' : undefined}>{t.navLabel}</a>
+          ))}
+          <ToolMenu client:load mode="desktop" currentPath={path} />
+          <noscript>
+            <details class="menu menu--noscript">
+              <summary class="navlink navlink--btn">All tools</summary>
+              <div class="menu__list">
+                {CATEGORIES.map((c) => (
+                  <div class="menu__group">
+                    <h3>{c.label}</h3>
+                    {tools.filter((t) => t.category === c.id).map((t) => <a href={`/${t.slug}/`}>{t.name}</a>)}
+                  </div>
+                ))}
+              </div>
+            </details>
+          </noscript>
+        </nav>
+
+        <details class="menu menu--phone">
+          <summary><Icon name="menu" size={20} /></summary>
+          <div class="menu__list">
+            {CATEGORIES.map((c) => (
+              <div class="menu__group">
+                <h3>{c.label}</h3>
+                {tools.filter((t) => t.category === c.id).map((t) => (
+                  <a href={`/${t.slug}/`} aria-current={isCurrent(t.slug) ? 'page' : undefined}>{t.name}</a>
+                ))}
+              </div>
+            ))}
+          </div>
+        </details>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="site-footer__grid">
+          <div>
+            <h2>{SITE.name}</h2>
+            <p>Free tools that shrink, edit and convert PDFs and pictures. Everything runs on your own device, so your files are never uploaded, and there are no limits or sign-ups.</p>
+          </div>
+          {CATEGORIES.map((c) => (
+            <div>
+              <h2>{c.label}</h2>
+              <ul>
+                {tools.filter((t) => t.category === c.id).map((t) => <li><a href={`/${t.slug}/`}>{t.name}</a></li>)}
+              </ul>
+            </div>
+          ))}
+          <div>
+            <h2>About</h2>
+            <ul>
+              <li><a href={SITE.repo}>Source code</a></li>
+              <li><a href="/engine/LICENSE-ghostscript.txt">Ghostscript licence (AGPL-3.0)</a></li>
+            </ul>
+          </div>
+        </div>
+        <p class="site-footer__fine">{SITE.name} is free software under the GNU AGPL v3. PDF tools use Ghostscript and qpdf; picture tools use the Squoosh codecs (MozJPEG, libwebp, libavif, oxipng).</p>
+      </div>
+    </footer>
+  </body>
+</html>

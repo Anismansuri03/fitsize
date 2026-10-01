@@ -1,0 +1,98 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import ToolMenu from '../components/ToolMenu';
+import { SITE } from '../site';
+import { CATEGORIES, tools } from '../data/tools';
+
+// Demo numbers for the hero gauge: 3.8 MB photo shrunk to fit a 200 KB limit.
+const max = 200 * 1.4;
+const afterPct = ((187 / max) * 100).toFixed(1);
+const siteUrl = Astro.site?.href ?? '/';
+const websiteJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: SITE.name,
+  url: siteUrl,
+};
+---
+<Base
+  title={`${SITE.name}: ${SITE.tagline}`}
+  description="Every PDF and picture tool you need: compress, merge, split, edit, sign, convert, protect and more. Free, no sign-up, and your files never leave your device."
+>
+  <script slot="head" type="application/ld+json" set:html={JSON.stringify(websiteJsonLd)} />
+  <section class="hero">
+    <div class="container hero__grid">
+      <div>
+        <h1>Every PDF tool. Nothing uploaded.</h1>
+        <p class="hero__lead">
+          Compress, merge, split, edit, sign, convert and protect your PDFs and pictures. {tools.length}+ tools, completely free, no sign-up, and everything happens on your own device.
+        </p>
+        <div class="hero__cta">
+          <a class="btn btn--primary btn--big" style="width:auto" href="/compress-pdf/">Compress a PDF</a>
+          <a class="btn btn--secondary btn--big" style="width:auto" href="/merge-pdf/">Merge PDFs</a>
+          <a class="btn btn--secondary btn--big" style="width:auto" href="/edit-pdf/">Edit a PDF</a>
+        </div>
+      </div>
+
+      <div class="demo" aria-label="Example result">
+        <div class="demo__head">
+          <span class="demo__file">passport-photo.jpg</span>
+          <span>Example</span>
+        </div>
+        <div class="gauge" role="img" aria-label="Before 3.8 MB. After 187 KB. Your limit is 200 KB.">
+          <span class="gauge__label g-l1">Before</span>
+          <div class="gauge__track g-t1"><div class="gauge__bar gauge__bar--before" style="--w:100%"></div><span class="gauge__cut"></span></div>
+          <span class="gauge__value g-v1">3.8 MB</span>
+          <span class="gauge__label g-l2">After</span>
+          <div class="gauge__track g-t2"><div class="gauge__bar gauge__bar--ok" style={`--w:${afterPct}%`}></div></div>
+          <span class="gauge__value g-v2">187 KB</span>
+          <div class="gauge__limit"><span>Limit 200 KB</span></div>
+        </div>
+        <p class="demo__verdict"><Icon name="check" size={20} /> Fits your limit</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section container" id="tools">
+    <div class="section__head">
+      <h2>Every tool</h2>
+      <ToolMenu client:visible mode="desktop" currentPath="/" />
+    </div>
+    <div class="catblocks">
+      {CATEGORIES.map((c) => (
+        <div class="catblock">
+          <h3 class="catblock__title">{c.label}</h3>
+          <div class="catblock__grid">
+            {tools.filter((t) => t.category === c.id).map((t) => (
+              <a class="toolcard" href={`/${t.slug}/`}>
+                <span class="toolcard__icon"><Icon name={t.icon} size={24} /></span>
+                <span class="toolcard__body">
+                  <span class="toolcard__name">{t.name}</span>
+                  <span class="toolcard__desc">{t.short}</span>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="section container">
+    <div class="promises">
+      <div>
+        <h3>Your files stay with you</h3>
+        <p>Everything happens inside your browser. Nothing is uploaded, so private documents stay private.</p>
+      </div>
+      <div>
+        <h3>No limits, no sign-up</h3>
+        <p>No daily quota, no file size cap, no account. Use it as often as you like.</p>
+      </div>
+      <div>
+        <h3>Built to actually work</h3>
+        <p>Type 200 KB and you get a file under 200 KB. Lock a PDF and it’s really locked. No surprises.</p>
+      </div>
+    </div>
+  </section>
+</Base>

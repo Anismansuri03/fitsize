@@ -1,0 +1,8 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import ResizeImageTool from '../components/ResizeImageTool';
+import { toolBySlug } from '../data/tools';
+---
+<ToolPage tool={toolBySlug('resize-image')}>
+  <ResizeImageTool client:load />
+</ToolPage>

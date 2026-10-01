@@ -1,0 +1,24 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import CompressPdfTool from '../components/CompressPdfTool';
+import { toolBySlug } from '../data/tools';
+import { PDF_SIZES } from '../data/sizes';
+import type { SizeLanding } from '../data/sizes';
+
+export function getStaticPaths() {
+  return PDF_SIZES.map((size) => ({ params: { size: size.slug }, props: { size } }));
+}
+const { size } = Astro.props as { size: SizeLanding };
+const tool = toolBySlug('compress-pdf');
+---
+<ToolPage
+  tool={tool}
+  h1={`Compress a PDF to ${size.label}`}
+  lede={`Forms, job portals and email often set a limit like ${size.label}. Drop your PDF in and we shrink it to fit, keeping it as sharp as we can.`}
+  metaTitle={`Compress PDF to ${size.label}`}
+  metaDescription={`Reduce a PDF to under ${size.label}. Free, no sign-up, and your file never leaves your device.`}
+  sizeLinks={PDF_SIZES.filter((s) => s.slug !== size.slug).map((s) => ({ href: `/compress-pdf-to-${s.slug}/`, label: s.label }))}
+  sizeLinksHeading="Compress a PDF to another size"
+>
+  <CompressPdfTool client:load defaultValue={size.value} defaultUnit={size.unit} />
+</ToolPage>

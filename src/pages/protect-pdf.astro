@@ -1,0 +1,8 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import { ProtectPdfTool } from '../components/pdftools/SecurityTools';
+import { toolBySlug } from '../data/tools';
+---
+<ToolPage tool={toolBySlug('protect-pdf')}>
+  <ProtectPdfTool client:load />
+</ToolPage>

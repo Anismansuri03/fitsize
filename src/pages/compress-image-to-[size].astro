@@ -1,0 +1,24 @@
+---
+import ToolPage from '../layouts/ToolPage.astro';
+import CompressImageTool from '../components/CompressImageTool';
+import { toolBySlug } from '../data/tools';
+import { IMAGE_SIZES } from '../data/sizes';
+import type { SizeLanding } from '../data/sizes';
+
+export function getStaticPaths() {
+  return IMAGE_SIZES.map((size) => ({ params: { size: size.slug }, props: { size } }));
+}
+const { size } = Astro.props as { size: SizeLanding };
+const tool = toolBySlug('compress-image');
+---
+<ToolPage
+  tool={tool}
+  h1={`Compress a picture to ${size.label}`}
+  lede={`Photo uploads often have a limit like ${size.label}. Drop your picture in and we find the best quality that fits.`}
+  metaTitle={`Compress image to ${size.label}`}
+  metaDescription={`Reduce a JPG, PNG or WebP picture to under ${size.label}. Free, no sign-up, and your picture never leaves your device.`}
+  sizeLinks={IMAGE_SIZES.filter((s) => s.slug !== size.slug).map((s) => ({ href: `/compress-image-to-${s.slug}/`, label: s.label }))}
+  sizeLinksHeading="Compress a picture to another size"
+>
+  <CompressImageTool client:load defaultValue={size.value} defaultUnit={size.unit} />
+</ToolPage>
