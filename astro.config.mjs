@@ -1,8 +1,8 @@
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
 
-// Set SITE_URL when you know your domain (used for canonical links + sitemap).
-const site = process.env.SITE_URL || 'https://fitsize.example.com';
+// Production domain used for canonical URLs and sitemap generation.
+const site = process.env.SITE_URL || 'https://fitsize.dpdns.org';
 
 export default defineConfig({
   site,
